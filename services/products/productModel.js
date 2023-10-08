@@ -17,8 +17,22 @@ const productSchema = new Schema({
   },
   variants: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      size: {
+        type: String,
+        // required: true,
+      },
+      color: {
+        type: String,
+        // required: true,
+      },
+      price: {
+        type: Number,
+        // required: true,
+      },
+      quantity: {
+        type: Number,
+        // required: true,
+      },
     },
   ],
 });
