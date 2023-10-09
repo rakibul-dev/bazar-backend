@@ -46,22 +46,19 @@ passport.deserializeUser((user, done) => {
 //   })
 // );
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
+router.post("/auth/login", passport.authenticate("local"), (req, res) => {
   // console.log({ user: req.user });
 
   try {
-    res.status(201).json({ user: req.user });
+    res.status(201).json(req.user);
   } catch (error) {}
 });
 
-router.get("/external", (req, res) => {
+router.get("/auth/external", (req, res) => {
   const externalURL = "http://example.com";
   res.redirect(externalURL);
 });
 
 router.post("/user/register", registeUser);
 
-module.exports = {
-  path: "/auth",
-  router,
-};
+module.exports = router;
