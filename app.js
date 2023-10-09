@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const session = require("express-session");
+(swaggerJsdoc = require("swagger-jsdoc")),
+  (swaggerUi = require("swagger-ui-express"));
+const swaggerFile = require("./utils/api-doc/swagger-output.json");
+
 const passport = require("passport");
 const cors = require("cors");
 
@@ -13,6 +17,9 @@ require("dotenv").config();
 // Your configuration file
 
 const app = express();
+
+// app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -122,10 +129,13 @@ function loadRoutes(app) {
   fs.readdirSync(routesDir).forEach((file) => {
     const routePath = path.join(routesDir, file);
     const routeModule = require(routePath);
+    // console.log(routeModule);
 
-    if (routeModule.path && routeModule.router) {
-      app.use(routeModule.path, routeModule.router);
-    }
+    app.use(routeModule);
+    // if (routeModule.path && routeModule.router) {
+    //   //   app.use(routeModule.router);
+    //   console.log(router);
+    // }
   });
 }
 
