@@ -5,10 +5,7 @@ const { getUsers, getUserbyId } = require("../services/user/UserController");
 // const UserController = require("../controllers/userController");
 
 // Define your routes here
-router.get("/", getUsers);
-router.get("/:id", getUserbyId);
+router.get("/users", getUsers);
+router.get("/users/:id", getUserbyId);
 
-module.exports = {
-  path: "/users", // Define the base path for these routes
-  router,
-};
+module.exports = router;

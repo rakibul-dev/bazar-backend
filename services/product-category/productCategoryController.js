@@ -1,8 +1,10 @@
 const productCategory = require("./productCategoryModel");
 
 const createProductCategory = async (req, res) => {
-  console.log("category hitted");
+  //   console.log(req.file);
 
+  //   console.log("uploade-location=====>", req.file.location);
+  //   console.log(req.body.name);
   let CategoryObj = {};
 
   for (cat in req.body) {
