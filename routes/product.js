@@ -10,21 +10,22 @@ const {
   addNewProductVraiant,
 } = require("../services/products/productController");
 
-router.get("/", getProducts);
+router.get("/products", getProducts);
 
-router.post("/create", ensureAdmin, createProduct);
+router.post("/products/create", ensureAdmin, createProduct);
 
-router.put("/:id", ensureAdmin, updateProduct);
+router.put("/products/:id", ensureAdmin, updateProduct);
 
-router.put("/:productId/variant/:variantId", ensureAdmin, updateProductVariant);
+router.put(
+  "/products/:productId/variant/:variantId",
+  ensureAdmin,
+  updateProductVariant
+);
 router.delete(
-  "/:productId/variant/:variantId",
+  "/products/:productId/variant/:variantId",
   ensureAdmin,
   deleteProductVariant
 );
 
-router.put("/:productId/variant", ensureAdmin, addNewProductVraiant);
-module.exports = {
-  path: "/products",
-  router,
-};
+router.put("/products/:productId/variant", ensureAdmin, addNewProductVraiant);
+module.exports = router;
