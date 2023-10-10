@@ -1,23 +1,23 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const fs = require("fs");
-const path = require("path");
+const swaggerFile = require("./utils/api-doc/swagger-output.json");
+const RedisStore = require("connect-redis").default;
 const session = require("express-session");
+const mongoose = require("mongoose");
+const express = require("express");
+
+const path = require("path");
+var morgan = require("morgan");
+const redis = require("redis");
+const cors = require("cors");
+const fs = require("fs");
 (swaggerJsdoc = require("swagger-jsdoc")),
   (swaggerUi = require("swagger-ui-express"));
-const swaggerFile = require("./utils/api-doc/swagger-output.json");
 
 const passport = require("passport");
-const cors = require("cors");
-
-const redis = require("redis");
-
-const RedisStore = require("connect-redis").default;
 require("dotenv").config();
 // Your configuration file
 
 const app = express();
-
+app.use(morgan("tiny"));
 // app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
@@ -44,7 +44,7 @@ mongoose
     }
   )
   .then(() => {
-    console.log(`app connected with ${process.env.DB_NAME} database`);
+    console.log(`app connected with ${process.env.DB_NAME} database 🚀`);
   })
   .catch((err) => {
     console.error("MongoDB connection error: ", err);
@@ -96,7 +96,7 @@ let redisClient = redis.createClient({
 
 redisClient
   .connect()
-  .then((res) => console.log("redis is connected"))
+  .then((res) => console.log("redis is connected 💾"))
   .catch(console.error);
 
 // Initialize store.
