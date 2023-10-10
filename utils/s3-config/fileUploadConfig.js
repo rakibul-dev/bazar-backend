@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
+require("aws-sdk/lib/maintenance_mode_message").suppress = true;
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
