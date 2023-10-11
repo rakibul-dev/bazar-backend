@@ -1,8 +1,7 @@
 const ensureAdmin = (req, res, next) => {
   const isAuth = req.isAuthenticated();
-  const isAdmin = req.user.role;
-  if (isAuth && isAdmin === "admin") {
-    // console.log(req.user);
+
+  if (isAuth && req.user.role === "admin") {
     return next();
   }
   res

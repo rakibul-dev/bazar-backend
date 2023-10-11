@@ -21,10 +21,28 @@ const registeUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().exec();
-    res.json(users);
+    // console.log(req.query);
+    const role = req.query?.role || "customer";
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.per_page) || 10;
+    const totalCount = await User.countDocuments({ role });
+    console.log(req.parmas.role);
+    const totalPages = Math.ceil(totalCount / perPage);
+    const users = await User.find({ role })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    res.status(201).json({
+      users,
+      pagination: {
+        page,
+        per_page: perPage,
+        total_items: totalCount,
+        total_pages: totalPages,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred." });
+    res.status(500).json({ message: error });
   }
 };
 
@@ -38,8 +56,36 @@ const getUserbyId = async (req, res) => {
   }
 };
 
+const getCustomers = async (req, res) => {
+  try {
+    // console.log(req.query);
+    const role = req.query?.role || "customer";
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.per_page) || 10;
+    const totalCount = await User.countDocuments({ role });
+
+    const totalPages = Math.ceil(totalCount / perPage);
+    const users = await User.find({ role })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    res.status(201).json({
+      users,
+      pagination: {
+        page,
+        per_page: perPage,
+        total_items: totalCount,
+        total_pages: totalPages,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 module.exports = {
   registeUser,
   getUsers,
   getUserbyId,
+  getCustomers,
 };

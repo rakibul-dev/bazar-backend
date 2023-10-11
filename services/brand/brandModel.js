@@ -11,6 +11,11 @@ const brandSchema = new Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["featured", "deleted", "pending", "approved"],
+      default: "approved",
+    },
   },
   { timestamps: true }
 );

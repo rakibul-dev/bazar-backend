@@ -1,9 +1,9 @@
-const productCategory = require("./productCategoryModel");
+const ProductCategory = require("./productCategoryModel");
 
 const createProductCategory = async (req, res) => {
   //   console.log(req.file);
 
-  //   console.log("uploade-location=====>", req.file.location);
+  console.log("uploade-location=====>", req.file.location);
   //   console.log(req.body.name);
   let CategoryObj = {};
 
@@ -11,9 +11,9 @@ const createProductCategory = async (req, res) => {
     // console.log(cat);
     CategoryObj[cat] = req.body[cat];
   }
-
+  CategoryObj.image = req.file.location;
   try {
-    const Category = await new productCategory(CategoryObj).save();
+    const Category = await new ProductCategory(CategoryObj).save();
 
     res.status(201).json(Category);
   } catch (error) {}
@@ -21,8 +21,7 @@ const createProductCategory = async (req, res) => {
 
 const getProductCategories = async (req, res) => {
   try {
-    const categories = await productCategory
-      .find()
+    const categories = await ProductCategory.find({ status: "approved" })
       .populate("parentCategory")
       .exec();
 
@@ -42,10 +41,27 @@ const updateProductCategory = async (req, res) => {
     CategoryObj[cat] = req.body[cat];
   }
   try {
-    const updatedCategory = await productCategory
-      .findByIdAndUpdate(id, CategoryObj, { new: true })
-      .exec();
+    const updatedCategory = await ProductCategory.findByIdAndUpdate(
+      id,
+      CategoryObj,
+      { new: true }
+    ).exec();
     res.status(201).json(updatedCategory);
+  } catch (error) {}
+};
+
+const deleteProductCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log({ id });
+    const productcategory = await ProductCategory.findByIdAndUpdate(
+      { _id: id },
+      {
+        status: "deleted",
+      },
+      { new: true }
+    ).exec();
+    res.status(201).json(productcategory);
   } catch (error) {}
 };
 
@@ -53,4 +69,5 @@ module.exports = {
   createProductCategory,
   getProductCategories,
   updateProductCategory,
+  deleteProductCategory,
 };
