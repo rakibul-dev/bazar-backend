@@ -9,6 +9,8 @@ const productCategorySchema = new Schema(
     },
     status: {
       type: String,
+      enum: ["deleted", "approved"],
+      default: "approved",
     },
     image: {
       type: String,
@@ -21,9 +23,9 @@ const productCategorySchema = new Schema(
   { timestamps: true }
 );
 
-const productCategory = mongoose.model(
+const ProductCategory = mongoose.model(
   "ProductCategory",
   productCategorySchema
 );
 
-module.exports = productCategory;
+module.exports = ProductCategory;
