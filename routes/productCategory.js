@@ -7,6 +7,7 @@ const {
   createProductCategory,
   getProductCategories,
   updateProductCategory,
+  deleteProductCategory,
 } = require("../services/product-category/productCategoryController");
 
 router.post(
@@ -17,5 +18,6 @@ router.post(
 );
 router.get("/categories", getProductCategories);
 router.put("/categories/:id", ensureAdmin, updateProductCategory);
+router.delete("/categories/:id", ensureAdmin, deleteProductCategory);
 
 module.exports = router;
