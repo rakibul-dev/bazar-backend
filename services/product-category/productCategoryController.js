@@ -65,9 +65,30 @@ const deleteProductCategory = async (req, res) => {
   } catch (error) {}
 };
 
+const createFeaturedCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const feature = await ProductCategory.findById(id).exec();
+
+    const isFeatured = () => {
+      return feature.featured;
+    };
+
+    const category = await ProductCategory.findByIdAndUpdate(
+      id,
+      {
+        featured: isFeatured() ? false : true,
+      },
+      { new: true }
+    ).exec();
+    res.status(201).json(category);
+  } catch (error) {}
+};
+
 module.exports = {
   createProductCategory,
   getProductCategories,
   updateProductCategory,
   deleteProductCategory,
+  createFeaturedCategory,
 };
