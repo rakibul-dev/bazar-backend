@@ -56,7 +56,7 @@ router.post("/auth/login", passport.authenticate("local"), (req, res) => {
 
 router.post("/user/register", registeUser);
 
-router.get("/user/logout", (req, res) => {
+router.get("/user/logout", (req, res, next) => {
   req.logout(req.user, (err) => {
     if (err) return next(err);
     res.json("Logged out");
