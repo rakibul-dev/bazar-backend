@@ -54,11 +54,23 @@ router.post("/auth/login", passport.authenticate("local"), (req, res) => {
   } catch (error) {}
 });
 
-router.get("/auth/external", (req, res) => {
-  const externalURL = "http://example.com";
-  res.redirect(externalURL);
-});
-
 router.post("/user/register", registeUser);
+
+router.get("/user/logout", (req, res) => {
+  req.logout(req.user, (err) => {
+    if (err) return next(err);
+    res.json("Logged out");
+  });
+  req.session.destroy(function (err) {
+    if (!err) {
+      res
+        .status(200)
+        .clearCookie("connect.sid", { path: "/" })
+        .json({ status: "Success" });
+    } else {
+      // handle error case...
+    }
+  });
+});
 
 module.exports = router;
