@@ -19,6 +19,10 @@ const productCategorySchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "ProductCategory",
     },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

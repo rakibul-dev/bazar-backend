@@ -8,6 +8,7 @@ const {
   getProductCategories,
   updateProductCategory,
   deleteProductCategory,
+  createFeaturedCategory,
 } = require("../services/product-category/productCategoryController");
 
 router.post(
@@ -19,5 +20,6 @@ router.post(
 router.get("/categories", getProductCategories);
 router.put("/categories/:id", ensureAdmin, updateProductCategory);
 router.delete("/categories/:id", ensureAdmin, deleteProductCategory);
+router.put("/categories/featured/:id", ensureAdmin, createFeaturedCategory);
 
 module.exports = router;

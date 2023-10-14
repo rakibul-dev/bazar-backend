@@ -16,6 +16,10 @@ const brandSchema = new Schema(
       enum: ["featured", "deleted", "pending", "approved"],
       default: "approved",
     },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
