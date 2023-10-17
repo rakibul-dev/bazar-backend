@@ -5,18 +5,22 @@ const productSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      //   required: true,
     },
     description: {
       type: String,
-      required: true,
+      //   required: true,
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      //   required: true,
     },
-    image: [{ type: String }],
+    image: [
+      {
+        type: String,
+      },
+    ],
     variants: [
       {
         size: {

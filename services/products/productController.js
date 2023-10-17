@@ -1,19 +1,28 @@
 const Product = require("./productModel");
 
 const createProduct = async (req, res) => {
-  console.log("Product hited");
+  //   console.log("uploade-location=====>", req);
   try {
     let productObj = {};
 
     for (prod in req.body) {
       productObj[prod] = req.body[prod];
     }
+    // productObj.image = req.files.location;
+    const images = [];
+    req.files.forEach((element) => {
+      images.push(element.location);
+    });
+    productObj.image = images;
+    console.log(productObj);
 
     const product = await new Product(productObj).save();
+    // console.log(product);
 
     res.status(201).json(product);
   } catch (error) {
-    res.status(500).json(error);
+    // res.status(500).json(error);
+    console.log(error);
     // res.status(500).json("An error occurred.");
   }
 };
