@@ -83,9 +83,19 @@ const getCustomers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  console.log(req.user);
+  const { _id } = req.user;
+  //   try {
+  const user = await User.findOne({ _id }).exec();
+  res.json(user);
+  //   } catch (error) {}
+};
+
 module.exports = {
   registeUser,
   getUsers,
   getUserbyId,
   getCustomers,
+  getUser,
 };

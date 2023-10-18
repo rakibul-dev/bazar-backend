@@ -47,10 +47,12 @@ const updateProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
   try {
-    const product = await Product.find().exec();
+    const product = await Product.find().populate(["category", "brand"]).exec();
+
     res.status(201).json(product);
   } catch (error) {
-    res.status(500).json(error);
+    // res.status(500).json(error);
+    console.log(error);
   }
 };
 

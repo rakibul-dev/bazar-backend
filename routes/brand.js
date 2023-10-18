@@ -6,6 +6,7 @@ const {
   getBrands,
   updateBrand,
   deleteBrand,
+  createFeaturedBrand,
 } = require("../services/brand/brandControler");
 const { uploadImage } = require("../utils/s3-config/fileUploadConfig");
 
@@ -18,5 +19,6 @@ router.post(
 router.get("/brands", getBrands);
 router.put("/brands/:id", ensureAdmin, updateBrand);
 router.delete("/brands/:id", ensureAdmin, deleteBrand);
+router.put("/brands/featured/:id", ensureAdmin, createFeaturedBrand);
 
 module.exports = router;
