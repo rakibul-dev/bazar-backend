@@ -11,6 +11,6 @@ const {
 router.post("/cart/:userId", addToCart);
 router.put("/cart/:id", removeCartItem);
 router.put("/cart/product/quantity/:id", updateCartItemQuantity);
-router.get("/cart/:id", getCartItems);
+router.get("/cart/:userId", getCartItems);
 
 module.exports = router;
