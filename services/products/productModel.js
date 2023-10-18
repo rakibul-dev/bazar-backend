@@ -13,14 +13,31 @@ const productSchema = new Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "ProductCategory",
       //   required: true,
+    },
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Brand",
     },
     image: [
       {
         type: String,
       },
     ],
+    stock: {
+      type: Number,
+    },
+    statue: {
+      type: String,
+      default: "pending",
+    },
+    price: {
+      type: Number,
+    },
+    sale_price: {
+      type: Number,
+    },
     variants: [
       {
         size: {
