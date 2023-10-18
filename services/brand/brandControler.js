@@ -20,9 +20,10 @@ exports.getBrands = async (req, res) => {
     const perPage = parseInt(req.query.per_page) || 10;
     const totalCount = await Brand.countDocuments({ status });
     const totalPages = Math.ceil(totalCount / perPage);
-    const brands = await Brand.find({ status })
+    const brands = await Brand.find()
       .skip((page - 1) * perPage)
       .limit(perPage);
+    console.log({ totalPages, totalCount });
 
     res.status(201).json({
       brands,
@@ -51,6 +52,28 @@ exports.deleteBrand = async (req, res) => {
       { new: true }
     );
     res.status(201).json(deletedBrand);
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred." });
+  }
+};
+
+exports.createFeaturedBrand = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const feature = await Brand.findById(id).exec();
+
+    const isFeatured = () => {
+      return feature.featured;
+    };
+
+    const brand = await Brand.findByIdAndUpdate(
+      id,
+      {
+        featured: isFeatured() ? false : true,
+      },
+      { new: true }
+    ).exec();
+    res.status(201).json(brand);
   } catch (error) {
     res.status(500).json({ message: "An error occurred." });
   }
