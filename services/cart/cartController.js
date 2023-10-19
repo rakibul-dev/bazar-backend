@@ -60,7 +60,9 @@ exports.addToCart = async (req, res) => {
 
   //   console.log({product , userId });
 
-  const isAlreadyinCart = await Cart.findOne({ user: userId, product }).exec();
+  const isAlreadyinCart = await Cart.findOne({ user: userId, product })
+    .populate("product")
+    .exec();
 
   try {
     if (isAlreadyinCart) {
