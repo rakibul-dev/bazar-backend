@@ -9,7 +9,7 @@ const {
 } = require("../services/cart/cartController");
 
 router.post("/cart/:userId", addToCart);
-router.put("/cart/:id", removeCartItem);
+router.delete("/cart/:id", removeCartItem);
 router.put("/cart/product/quantity/:id", updateCartItemQuantity);
 router.get("/cart/:userId", getCartItems);
 
