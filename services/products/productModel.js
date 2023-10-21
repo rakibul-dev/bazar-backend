@@ -32,7 +32,7 @@ const productSchema = new Schema(
       type: String,
       default: "pending",
     },
-    price: {
+    regular_price: {
       type: Number,
     },
     sale_price: {

@@ -47,7 +47,9 @@ const Cart = require("./cartModel");
 exports.getCartItems = async (req, res) => {
   try {
     const { userId } = req.params;
-    const cartItems = await Cart.find({ user: userId }).exec();
+    const cartItems = await Cart.find({ user: userId })
+      .populate("product")
+      .exec();
     res.json(cartItems);
   } catch (error) {}
 };
@@ -55,17 +57,27 @@ exports.getCartItems = async (req, res) => {
 exports.addToCart = async (req, res) => {
   const { userId } = req.params;
   const { product, quantity } = req.body;
+
   //   console.log({product , userId });
+
+  const isAlreadyinCart = await Cart.findOne({ user: userId, product })
+    .populate("product")
+    .exec();
+
   try {
-    const cart = await new Cart({
-      user: userId,
-      product,
-      quantity: 1,
-    })
-      .save()
-      .then((item) => item.populate("product"));
-    console.log(cart);
-    res.json(cart);
+    if (isAlreadyinCart) {
+      res.json(isAlreadyinCart);
+    } else {
+      const cart = await new Cart({
+        user: userId,
+        product,
+        quantity: 1,
+      })
+        .save()
+        .then((item) => item.populate("product"));
+
+      res.json(cart);
+    }
   } catch (error) {
     console.log(error);
   }
