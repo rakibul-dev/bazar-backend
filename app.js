@@ -33,14 +33,6 @@ app.use(
   })
 );
 
-// var allowCrossDomain = function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// };
-// app.use(allowCrossDomain);
-
 // Connect to MongoDB
 mongoose
   .connect(
@@ -71,21 +63,26 @@ redisClient
   .catch(console.error);
 
 // Initialize store.
+var hour = 3600000;
 
 let redisStore = new RedisStore({
   client: redisClient,
   prefix: "bazar:",
+  ttl: 86400 * 365, //for changing default 24h time to live
 });
 
 app.use(
   session({
     store: redisStore,
-    // cookie: { maxAge: 5000 },
-    maxAge: 365 * 24 * 60 * 60 * 1000,
+    // maxAge: 365 * 24 * 60 * 60 * 1000,
     resave: false, // required: force lightweight session keep alive (touch)
-    saveUninitialized: true, // recommended: only save session when data exists
-
-    secret: "keyboard_cat",
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: "secret$%^134",
+    cookie: {
+      secure: false, // if true only transmit cookie over https
+      httpOnly: false, // if true prevent client side JS from reading the cookie
+      maxAge: 365 * 24 * 60 * 60 * 1000, // session max age in miliseconds
+    },
   })
 );
 
