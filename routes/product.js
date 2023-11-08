@@ -9,9 +9,11 @@ const {
   updateProductVariant,
   deleteProductVariant,
   addNewProductVraiant,
+  getProduct,
 } = require("../services/products/productController");
 
 router.get("/products", getProducts);
+router.get("/products/:id", getProduct);
 
 router.post(
   "/products/create",
