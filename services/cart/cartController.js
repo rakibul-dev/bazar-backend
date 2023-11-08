@@ -103,7 +103,9 @@ exports.updateCartItemQuantity = async (req, res) => {
       { _id: id },
       { quantity },
       { new: true }
-    ).exec();
+    )
+      .populate("product")
+      .exec();
     res.json(cartItem);
   } catch (error) {
     console.log(error);
