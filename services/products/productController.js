@@ -2,6 +2,7 @@ const Product = require("./productModel");
 
 const createProduct = async (req, res) => {
   //   console.log("uploade-location=====>", req);
+  console.log(req.body);
   try {
     let productObj = {};
 
@@ -54,6 +55,16 @@ const getProducts = async (req, res) => {
     // res.status(500).json(error);
     console.log(error);
   }
+};
+
+const getProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id)
+      .populate(["category", "brand"])
+      .exec();
+    res.json(product);
+  } catch (error) {}
 };
 
 const updateProductVariant = async (req, res) => {
@@ -117,4 +128,5 @@ module.exports = {
   updateProductVariant,
   deleteProductVariant,
   addNewProductVraiant,
+  getProduct,
 };
